@@ -1,0 +1,28 @@
+{
+  "name": "backend",
+  "version": "0.1.0",
+  "description": "Backend of our collaborative editor",
+  "main": "index.js",
+  "scripts": {
+    "start": "node src/app.js",
+    "dev": "nodemon src/app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/arnaud-fossop/collaborative-editor.git"
+  },
+  "author": "Arnaud Fosso P.",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/arnaud-fossop/collaborative-editor/issues"
+  },
+  "homepage": "https://github.com/arnaud-fossop/collaborative-editor#readme",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.19.2"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.0"
+  }
+}
