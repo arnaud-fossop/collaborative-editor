@@ -24,7 +24,19 @@ const App = () => {
     // Call your backend function to execute the code
     // Update the logs state with the output
     setLogs('Code execution in progress...'); // Example placeholder
-    fetch(process.env.REACT_APP_BACKEND_URL + "/status")
+    fetch(process.env.REACT_APP_BACKEND_URL + "/run", 
+      {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          language: language,
+          code: code,
+        })
+      }
+    )
         .then((res) => res.json())
         .then((data) => {
           setLogs(data.Status);

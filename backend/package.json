@@ -20,7 +20,8 @@
   "homepage": "https://github.com/arnaud-fossop/collaborative-editor#readme",
   "dependencies": {
     "cors": "^2.8.5",
-    "express": "^4.19.2"
+    "express": "^4.19.2",
+    "temp": "^0.9.4"
   },
   "devDependencies": {
     "nodemon": "^3.1.0"
