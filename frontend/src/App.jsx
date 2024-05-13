@@ -4,10 +4,9 @@ import Button from './components/Button';
 import OutputLogs from './components/OutputLogs';
 import LanguageSelector from './components/LanguageSelector';
 
-const SUPPORTED_LANGUAGES = ['javascript', 'python']; 
+const SUPPORTED_LANGUAGES = ['javascript', 'python'];
 
 const App = () => {
-  // return <Editor height="90vh" defaultLanguage="javascript" defaultValue="// some comment" />;
   const [code, setCode] = useState('print("Helloooo")'); // State for code content
   const [language, setLanguage] = useState('python'); // State for language
   const [logs, setLogs] = useState(''); // State for output logs
@@ -24,7 +23,8 @@ const App = () => {
     // Call your backend function to execute the code
     // Update the logs state with the output
     setLogs('Code execution in progress...'); // Example placeholder
-    fetch(process.env.REACT_APP_BACKEND_URL + "/run", 
+    console.log(language)
+    fetch(process.env.REACT_APP_BACKEND_URL + "/run",
       {
         method: 'POST',
         headers: {
@@ -37,33 +37,33 @@ const App = () => {
         })
       }
     )
-        .then((res) => res.json())
-        .then((data) => {
-          setLogs(data.Status);
-        });
+      .then((res) => res.json())
+      .then((data) => {
+        setLogs(data.Status);
+      });
   };
 
   return (
-    <div className="app flex w-full h-full gap-2">
-      <div className="controls d-flex flex-column justify-content-center align-items-center">
+    <div className="flex flex-col gap-4 p-4 h-full">
+      <div className="flex gap-4 items-center">
         <div className='col-md-6'>
           <Button text="Run Code" onClick={handleRunCode} />
         </div>
         <div className='col-md-6'>
-        <LanguageSelector
-          languages={SUPPORTED_LANGUAGES}
-          onLanguageChange={handleLanguageChange}
-          selectedLanguage={language}
-        />
+          <LanguageSelector
+            languages={SUPPORTED_LANGUAGES}
+            onLanguageChange={handleLanguageChange}
+            selectedLanguage={language}
+          />
         </div>
       </div>
-      <div className='flex-2 w-full overflow-hidden'>
-        <CodeEditor value={code} onChange={handleCodeChange} language={language} width='100%' height='20vh' />
+      <div className='flex flex-1 border border-1 border-blue-400 rounded p-2'>
+        <CodeEditor value={code} onChange={handleCodeChange} language={language} width='100%' height='100%' />
       </div>
-      <div className='flex-3 w-full'>
+      <div className='min-h-[10vh]'>
         <OutputLogs logs={logs} />
       </div>
-      
+
     </div>
   );
 };

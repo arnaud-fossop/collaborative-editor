@@ -1,29 +1,20 @@
 import React, { useState } from 'react';
 
 const LanguageSelector = ({ languages, onLanguageChange, selectedLanguage }) => {
-  const [isOpen, setIsOpen] = useState(false); // State for dropdown visibility
-
   const handleSelectLanguage = (event) => {
     onLanguageChange(event.target.value);
-    setIsOpen(false); // Close dropdown after selection
   };
 
   return (
-    <div className="language-selector">
-      <button onClick={() => setIsOpen(!isOpen)}>
-        {selectedLanguage}
-      </button>
-      {isOpen && (
-        <ul>
+    <div className="flex gap-2 border border-1 p-1 border-blue-400 rounded">
+      <label className='text-blue-500'>
+        Language
+      </label>
+      <select value={selectedLanguage} onChange={handleSelectLanguage}>
           {languages.map((lang) => (
-            <li key={lang}>
-              <button onClick={handleSelectLanguage} value={lang}>
-                {lang}
-              </button>
-            </li>
+            <option value={lang} key={lang}>{lang}</option>
           ))}
-        </ul>
-      )}
+        </select>
     </div>
   );
 };
