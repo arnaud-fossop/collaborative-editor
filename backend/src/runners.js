@@ -3,9 +3,15 @@ const path = require('path');
 const { spawn } = require("child_process");
 const fs = require('fs');
 
-const LANGUAGE_EXTENSIONS = {
-    "python": "py",
-    "javascript": "js"
+const SUPPORTED_LANGUAGES = {
+    python: {
+        extension: "py",
+        compiler: "python"
+    },
+    javascript: {
+        extension: "js",
+        compiler: "node"
+    }
 }
 
 /**
@@ -16,7 +22,7 @@ const LANGUAGE_EXTENSIONS = {
 function saveCodeTempFile(code, language) {
     return new Promise((resolve, reject) => {
         temp.mkdir('code-editor', (err, dirPath) => {
-            var codeFilePath = path.join(dirPath, `code.${LANGUAGE_EXTENSIONS[language]}`)
+            var codeFilePath = path.join(dirPath, `code.${SUPPORTED_LANGUAGES[language].extension}`)
             if (err) {
                 reject(err);
                 return;
@@ -54,7 +60,7 @@ module.exports = {
      * @returns 
      */
     runner: (language, code, setOutput) => {
-        if (!(language in LANGUAGE_EXTENSIONS)) {
+        if (!(language in SUPPORTED_LANGUAGES)) {
             // TODO need to create a more specific error
             throw Error(`Unsupported language ${language}`);
         }
@@ -62,15 +68,7 @@ module.exports = {
             console.log(codeFilePath);
             dirPath = path.dirname(codeFilePath)
             output = "";
-            var runnerProcess = null;
-            switch (language) {
-                case "python":
-                    runnerProcess = spawn("python", [codeFilePath]);
-                    break;
-                case "javascript":
-                    runnerProcess = spawn("node", [codeFilePath]);
-                    break;
-            }
+            var runnerProcess = spawn(SUPPORTED_LANGUAGES[language].compiler, [codeFilePath]);
 
             promise = promiseFromChildProcess(runnerProcess).then(function (result) {
                 console.log('promise complete: ' + result);
