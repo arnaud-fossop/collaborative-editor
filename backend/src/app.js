@@ -26,7 +26,7 @@ app.post("/run", async (req, res) => {
    code = payload.code;
    console.log(`Running in Language ${language}, code\n ${code}`);
    result = ""
-   await runners.pythonRunner(language, code, (output) => {
+   await runners.runner(language, code, (output) => {
       console.log("Result returned");
       result = output;
    });

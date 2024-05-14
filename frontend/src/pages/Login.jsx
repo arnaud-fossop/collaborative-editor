@@ -25,7 +25,7 @@ const LoginPage = ({ setToken }) => {
             setIsSubmitting(false);
         }).catch((err) => {
             console.log(`An error occured ${err}`);
-            setIsServerError(false);
+            setIsServerError(true);
             setIsSubmitting(false);
         })
         

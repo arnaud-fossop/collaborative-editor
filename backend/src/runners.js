@@ -52,7 +52,7 @@ module.exports = {
      * @param {function} setOutput - Call back to retrieve the output
      * @returns 
      */
-    pythonRunner: (language, code, setOutput) => {
+    runner: (language, code, setOutput) => {
         resolve = async (codeFilePath) => {
             console.log(codeFilePath);
             dirPath = path.dirname(codeFilePath)
@@ -73,7 +73,8 @@ module.exports = {
                 temp.cleanup();
             }, function (err) {
                 console.log('promise rejected: ' + err);
-                setOutput(output.replace(dirPath, ""));
+                finalOutput = `${output.replace(dirPath, "")}\nA fatal error occurred on the server`;
+                setOutput(finalOutput);
                 temp.cleanup();
             });
 

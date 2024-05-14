@@ -2,6 +2,7 @@ const fetch = require('fetch-retry')(global.fetch);
 
 const RETRY_DELAY = process.env.REACT_APP_API_RETRY_DELAY | 1000;
 const RETRIES = process.env.REACT_APP_API_RETRIES | 3;
+const BACKEND_URL = process.env.REACT_APP_BACKEND_URL
 
 const retryOptions = {
     retries: RETRIES,
@@ -11,7 +12,7 @@ const retryOptions = {
 }
 
 const runCode = (language, code) => {
-    return fetch(process.env.REACT_APP_BACKEND_URL + "/run",
+    return fetch(BACKEND_URL + "/run",
         {
             ...retryOptions,
             method: 'POST',
@@ -30,7 +31,7 @@ const runCode = (language, code) => {
 }
 
 const login = (username, password) => {
-    return fetch(process.env.REACT_APP_BACKEND_URL + "/login",
+    return fetch(BACKEND_URL + "/login",
         {
             ...retryOptions,
             method: 'POST',

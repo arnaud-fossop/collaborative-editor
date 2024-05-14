@@ -1,0 +1,40 @@
+services:
+    # database:
+    #     image: mongodb/mongodb-community-server:7.0.5-ubuntu2204
+    #     restart: always
+    #     ports:
+    #         - "27017:27017"
+
+    #     environment:
+    #         - MONGODB_INITDB_ROOT_USERNAME=gaia
+    #         - MONGODB_INITDB_ROOT_PASSWORD=1234
+    
+    backend:
+        build:
+          context: ./backend
+          target: dev
+        ports:
+          - 8000:8000
+        volumes:
+          - repo:/opt/dev
+        environment:
+          - PORT=8000
+        # depends_on:
+        #     - database
+    
+    frontend:
+        build:
+            context: ./frontend
+            target: dev
+        ports:
+            - 3000:3000
+        volumes:
+          - repo:/opt/dev
+
+volumes:
+    repo:
+        driver: local
+        driver_opts:
+          type: none
+          o: bind
+          device: ./
