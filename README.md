@@ -45,3 +45,25 @@ PORT=8000 npm run dev
 This will deploy the backend on your local computer at the port 8000.
 
 ## General comments
+
+### About the architecture
+#### Communication between components: Websockets instead of HTTP Pull requests
+The current implementation uses HTTP requests to connect the frontend to the backend. It is important to note that, if we were to implement the collaborative aspect of that editor, we would need to use websockets so that the backend (more precisely a certain component of the backend) will be able to manage the synchronization between users accessing the same edition session.
+
+The usage of this two-way communication could also be useful to send progressive update of the running code in case it is running for a longer period.
+
+The trade-off of this approach will be to have to manage the state of the session that is not needed
+in the current approach.
+
+#### Isolation of the running code
+As mentionned above, currently the user code is executed in the same environment as the main backend service. This clearly posed an important issue with security (that I tried to manage by using a non-root user in the production Docker image). The optimal implementation would be to launch the user code as a job on a separate worker with restricted access to internal resources. This option could also provide a way to provision differently the infrastructure for main backend API and of the workers (accounting for the popularity of a language, the subscription of the users, etc.).
+
+From my experience, I would use a tool like `Celery` which is implemented for different languages, including [Javascript](https://www.npmjs.com/package/celery-node).
+
+#### Authentication and security
+The current authentication is completely void. In a production-grade service, we will have to implement real authentication, provide a token, save the token in a place allowing the user to not need to authenticate again if the page is refreshed.
+
+The backend needs to be configured to allow only connection from the frontend.
+
+### About the CI/CD
+I did not create any CI/CD process, but this would definitely be needed. I did not even used `eslint` (Sorry). But I added some unit tests in the backend code.
