@@ -31,16 +31,16 @@ const LoginPage = ({ setToken }) => {
         
       }
     return (
-        <div className="flex object-center flex-col items-center h-screen">
+        <div className="flex justify-center flex-col items-center h-screen">
             <h1>Please Log In</h1>
             <form onSubmit={handleSubmit}>
                 <label>
                     <p>Username</p>
-                    <input type="text" onChange={e => setUserName(e.target.value)}/>
+                    <input className="border border-1 p-1 border-blue-400 rounded" type="text" onChange={e => setUserName(e.target.value)}/>
                 </label>
                 <label>
                     <p>Password</p>
-                    <input type="password" onChange={e => setPassword(e.target.value)}/>
+                    <input className="border border-1 p-1 border-blue-400 rounded" type="password" onChange={e => setPassword(e.target.value)}/>
                 </label>
                 <div>
                     <button className={`btn ${submitting ? 'disabled' : ''}`} disabled={submitting} type="submit">Submit</button>
