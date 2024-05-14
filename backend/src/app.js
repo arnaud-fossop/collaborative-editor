@@ -26,11 +26,19 @@ app.post("/run", async (req, res) => {
    code = payload.code;
    console.log(`Running in Language ${language}, code\n ${code}`);
    result = ""
-   await runners.runner(language, code, (output) => {
-      console.log("Result returned");
-      result = output;
-   });
-   res.send({ "output": result });
+   try {
+      await runners.runner(language, code, (output) => {
+         console.log("Result returned");
+         result = output;
+      });
+      res.send({ "output": result });
+   }
+   catch(err) {
+      //TODO need to better define the errors
+      res.statusCode = 422;
+      res.send("Invalid request");
+   }
+   
 })
 
 /**

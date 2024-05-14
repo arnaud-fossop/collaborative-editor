@@ -3,7 +3,7 @@ const path = require('path');
 const { spawn } = require("child_process");
 const fs = require('fs');
 
-const extensions = {
+const LANGUAGE_EXTENSIONS = {
     "python": "py",
     "javascript": "js"
 }
@@ -16,7 +16,7 @@ const extensions = {
 function saveCodeTempFile(code, language) {
     return new Promise((resolve, reject) => {
         temp.mkdir('code-editor', (err, dirPath) => {
-            var codeFilePath = path.join(dirPath, `code.${extensions[language]}`)
+            var codeFilePath = path.join(dirPath, `code.${LANGUAGE_EXTENSIONS[language]}`)
             if (err) {
                 reject(err);
                 return;
@@ -47,12 +47,17 @@ function promiseFromChildProcess(child) {
 
 module.exports = {
     /**
-     * Python Runner
-     * @param {string} code - Python code to execute
+     * Runner
+     * @param {string} language - Language used by the code
+     * @param {string} code - code to execute
      * @param {function} setOutput - Call back to retrieve the output
      * @returns 
      */
     runner: (language, code, setOutput) => {
+        if (!(language in LANGUAGE_EXTENSIONS)) {
+            // TODO need to create a more specific error
+            throw Error(`Unsupported language ${language}`);
+        }
         resolve = async (codeFilePath) => {
             console.log(codeFilePath);
             dirPath = path.dirname(codeFilePath)
