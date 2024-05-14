@@ -65,5 +65,9 @@ The current authentication is completely void. In a production-grade service, we
 
 The backend needs to be configured to allow only connection from the frontend.
 
+#### Frontend design
+As you would see, it is not the most beautiful layout, but I hope the main components are there. I did not added the way to give some input arguments, considering that the user may just define them in the script. However, I think, providing a way to define environment variables could be interesting... Anyway, designing UI is not my strong suite, but putting the components together is okay...ish :).
+
 ### About the CI/CD
 I did not create any CI/CD process, but this would definitely be needed. I did not even used `eslint` (Sorry). But I added some unit tests in the backend code.
+
