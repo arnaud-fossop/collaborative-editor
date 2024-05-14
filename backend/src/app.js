@@ -1,7 +1,6 @@
 const express = require('express');
 const cors = require('cors')
 const runners = require("./runners");
-const PORT = process.env.PORT || 8000;
 
 const app = express();
 app.use(cors()); // this is of course, not production ready :)
@@ -43,11 +42,10 @@ app.post("/run", async (req, res) => {
 
 /**
  * Login entrypoint
+ * TODO: complete
  */
 app.post("/login", (req, res) => {
    res.send({ status: "succeed", token: "mytoken" });
 })
 
-app.listen(PORT, () => {
-   console.log("Server Listening on PORT:", PORT);
-});
+module.exports = app
