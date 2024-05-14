@@ -62,6 +62,9 @@ From my experience, I would use a tool like `Celery` which is implemented for di
 
 #### Authentication and security
 The current authentication is completely void. In a production-grade service, we will have to implement real authentication, provide a token, save the token in a place allowing the user to not need to authenticate again if the page is refreshed.
+Also the token should be used in all the following calls to the API, I did not do that yet since there will be no validation for now.
+
+It is worth noting that a different service can be used to manage the authentication, and generate a JWT token that will be used to communicate with the main backend. This will implement a proper separation of concerns.
 
 The backend needs to be configured to allow only connection from the frontend.
 
